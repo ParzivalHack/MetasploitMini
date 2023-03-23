@@ -102,16 +102,8 @@ class MyCLI(cmd.Cmd):
         os.system(f"python {exploit_code}")
         
 def do_settarget(self, arg):
-    if not arg:
-        print("Usage: settarget <target>")
-        return
-    try:
-        socket.gethostbyname(arg)
-    except socket.gaierror:
-        print(f"Error: could not resolve {arg}")
-        return
-    self.target = arg
-    print(f"Target set to {self.target}")
+        self.target = arg
+        print(f"Target set to {self.target}")
         
     def do_exit(self, arg):
         return True
