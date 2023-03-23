@@ -1,0 +1,121 @@
+import cmd
+import socket
+import os
+import pyfiglet
+
+banner = pyfiglet.figlet_format("MetasploitMini")
+print(banner)
+print("Made by: Tommaso Bona")
+print("Github: https://github.com/ParzivalHack")
+print("Tip: try running the 'help' command.")
+
+class MyCLI(cmd.Cmd):
+    prompt = "MetasploitMini~$ "
+    
+    def __init__(self):
+        super().__init__()
+        self.target = ""
+      
+    def  do_help(self, arg):
+    	print("Commands List:")
+    	print("- help, to show this help message")
+    	print("- settarget, to set global target")
+    	print("- scan, to use the Port Scanner")
+    	print("- banner, to use the Banner Grabber")
+    	print("- generate, to generate a payload")
+    	print("- run, to run an exploit")
+    	
+    def do_scan(self, arg):
+        if not self.target:
+            print("Target not set. Use 'settarget <target>' to set the target IP or website.")
+            return
+        
+        args = arg.split()
+        if len(args) < 1:
+            print("Usage: scan <port range>")
+            return
+        start_port, end_port = args[0].split("-")
+        start_port = int(start_port)
+        end_port = int(end_port)
+        
+        for port in range(start_port, end_port + 1):
+            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            sock.settimeout(0.1)
+            result = sock.connect_ex((self.target, port))
+            if result == 0:
+                print(f"Port {port} is open")
+            sock.close()
+            
+    def do_banner(self, arg):
+        if not self.target:
+            print("Target not set. Use 'settarget <target>' to set the target IP or website.")
+            return
+        
+        args = arg.split()
+        if len(args) < 1:
+            print("Usage: banner <port>")
+            return
+        port = int(args[0])
+        
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.connect((self.target, port))
+        sock.send(b"HEAD / HTTP/1.0\r\n\r\n")
+        response = sock.recv(1024)
+        print(f"Banner: {response.decode('utf-8')}")
+        sock.close()
+        
+    def do_generate(self, arg):
+        if not self.target:
+            print("Target not set. Use 'settarget <target>' to set the target IP or website.")
+            return
+        
+        args = arg.split()
+        if len(args) < 3:
+            print("Usage: generate <payload type> <payload file> <payload data>")
+            return
+        payload_type, payload_file, payload_data = args
+        
+        if payload_type == "python":
+            payload = f"python -c \"{payload_data}\" > {payload_file}"
+        elif payload_type == "bash":
+            payload = f"echo '{payload_data}' > {payload_file}"
+        elif payload_type == "perl":
+            payload = f"perl -e '{payload_data}' > {payload_file}"
+        else:
+            print("Invalid payload type")
+            return
+            
+        os.system(payload)
+        print(f"Payload written to {payload_file}")
+        
+    def do_run(self, arg):
+        if not self.target:
+            print("Target not set. Use 'settarget <target>' to set the target IP or website.")
+            return
+        
+        args = arg.split()
+        if len(args) < 1:
+            print("Usage: run <exploit code>")
+            return
+        exploit_code = args[0]
+        
+        os.system(f"python {exploit_code}")
+        
+def do_settarget(self, arg):
+    if not arg:
+        print("Usage: settarget <target>")
+        return
+    try:
+        socket.gethostbyname(arg)
+    except socket.gaierror:
+        print(f"Error: could not resolve {arg}")
+        return
+    self.target = arg
+    print(f"Target set to {self.target}")
+        
+    def do_exit(self, arg):
+        return True
+
+if __name__ == "__main__":
+    cli = MyCLI()
+    cli.cmdloop()
