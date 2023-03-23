@@ -101,7 +101,7 @@ class MyCLI(cmd.Cmd):
         
         os.system(f"python {exploit_code}")
         
-def do_settarget(self, arg):
+    def do_settarget(self, arg):
         self.target = arg
         print(f"Target set to {self.target}")
         
