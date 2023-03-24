@@ -64,42 +64,28 @@ class MyCLI(cmd.Cmd):
         print(f"Banner: {response.decode('utf-8')}")
         sock.close()
         
-    def do_generate(self, arg):
-        if not self.target:
-            print("Target not set. Use 'settarget <target>' to set the target IP or website.")
-            return
-        
+    def do_setexploit(self, arg):
+        exploits = ["exploit1.py", "exploit2.py", "exploit3.py", "exploit4.py", "exploit5.py"]
         args = arg.split()
-        if len(args) < 3:
-            print("Usage: generate <payload type> <payload file> <payload data>")
+        if len(args) < 1:
+            print("Usage: setexploit <exploit number>")
             return
-        payload_type, payload_file, payload_data = args
-        
-        if payload_type == "python":
-            payload = f"python -c \"{payload_data}\" > {payload_file}"
-        elif payload_type == "bash":
-            payload = f"echo '{payload_data}' > {payload_file}"
-        elif payload_type == "perl":
-            payload = f"perl -e '{payload_data}' > {payload_file}"
-        else:
-            print("Invalid payload type")
+        exploit_num = int(args[0])
+        if exploit_num < 1 or exploit_num > len(exploits):
+            print("Invalid exploit number")
             return
-            
-        os.system(payload)
-        print(f"Payload written to {payload_file}")
-        
+        self.exploit = exploits[exploit_num-1]
+        print(f"Exploit set to {self.exploit}")
+
     def do_run(self, arg):
         if not self.target:
             print("Target not set. Use 'settarget <target>' to set the target IP or website.")
             return
-        
-        args = arg.split()
-        if len(args) < 1:
-            print("Usage: run <exploit code>")
+        if not self.exploit:
+            print("Exploit not set. Use 'setexploit <exploit number>' to set the exploit.")
             return
-        exploit_code = args[0]
-        
-        os.system(f"python {exploit_code}")
+        os.system(f"python {self.exploit}")
+        os.system(f"nc -lvp 4444") 
         
     def do_settarget(self, arg):
         self.target = arg
