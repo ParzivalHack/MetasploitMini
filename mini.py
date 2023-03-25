@@ -30,7 +30,7 @@ class MyCLI(cmd.Cmd):
     	
     def do_setip(self, arg):
         self.attacker_ip = arg
-        print(colored(f"Attacker IP set to {self.attacker_ip}", 'blue'))	
+        print(colored(f"Attacker IP successfully set to {self.attacker_ip}", 'green'))	
     
     def do_scan(self, arg):
         if not self.target:
