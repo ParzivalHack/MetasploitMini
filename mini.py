@@ -86,7 +86,7 @@ class MyCLI(cmd.Cmd):
     def do_run(self, arg):
             if not self.target:
             	print("Target not set. Use 'settarget <target>' to set the target IP or website.")
-            return
+            	return
             if not self.exploit:
             	print("Exploit not set. Use 'setexploit <exploit number>' to set the exploit.")
             	return
