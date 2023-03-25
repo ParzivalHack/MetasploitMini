@@ -25,6 +25,7 @@ class MyCLI(cmd.Cmd):
     	print("- setexploit, to set a global exploit")
     	print("- setip, to set the attacker IP for the reverse shell")
     	print("- run, to run an exploit")
+    	print("- exit, to exit MetasploitMini")
     	
     def do_setip(self, arg):
         self.attacker_ip = arg
