@@ -6,9 +6,9 @@ from termcolor import colored
 
 banner = pyfiglet.figlet_format("MetasploitMini")
 print(colored(banner, 'blue'))
-print("Made by: Tommaso Bona")
-print("Github: https://github.com/ParzivalHack")
-print("Tip: try running the 'help' command.")
+print(colored("Made by: Tommaso Bona", 'blue'))
+print(colored("Github: https://github.com/ParzivalHack", 'blue'))
+print(colored("Tip: try running the 'help' command.", 'blue'))
 
 class MyCLI(cmd.Cmd):
     prompt = colored("MetasploitMini~$ ", 'red')
@@ -34,12 +34,12 @@ class MyCLI(cmd.Cmd):
     
     def do_scan(self, arg):
         if not self.target:
-            print("Target not set. Use 'settarget <target>' to set the target IP or website.")
+            print(colored("Target not set. Use 'settarget <target>' to set the target IP or website.", 'red'))
             return
         
         args = arg.split()
         if len(args) < 1:
-            print("Usage: scan <port range>")
+            print(colored("Usage: scan <port range>", 'blue'))
             return
         start_port, end_port = args[0].split("-")
         start_port = int(start_port)
@@ -50,17 +50,17 @@ class MyCLI(cmd.Cmd):
             sock.settimeout(0.1)
             result = sock.connect_ex((self.target, port))
             if result == 0:
-                print(f"Port {port} is open")
+                print(colored(f"Port {port} is open", 'green'))
             sock.close()
             
     def do_banner(self, arg):
         if not self.target:
-            print("Target not set. Use 'settarget <target>' to set the target IP or website.")
+            print(colored("Target not set. Use 'settarget <target>' to set the target IP or website.", 'red'))
             return
         
         args = arg.split()
         if len(args) < 1:
-            print("Usage: banner <port>")
+            print(colored("Usage: banner <port>", 'blue'))
             return
         port = int(args[0])
         
@@ -68,35 +68,35 @@ class MyCLI(cmd.Cmd):
         sock.connect((self.target, port))
         sock.send(b"HEAD / HTTP/1.0\r\n\r\n")
         response = sock.recv(1024)
-        print(f"Banner: {response.decode('utf-8')}")
+        print(colored(f"Banner: {response.decode('utf-8')}", 'blue'))
         sock.close()
         
     def do_setexploit(self, arg):
         exploits = ["exploit1.py", "exploit2.py", "exploit3.py", "exploit4.py", "exploit5.py"]
         args = arg.split()
         if len(args) < 1:
-            print("Usage: setexploit <exploit number>")
+            print(colored("Usage: setexploit <exploit number>", 'blue'))
             return
         exploit_num = int(args[0])
         if exploit_num < 1 or exploit_num > len(exploits):
-            print("Invalid exploit number")
+            print(colored("Invalid exploit number", 'red'))
             return
         self.exploit = exploits[exploit_num-1]
-        print(f"Exploit set to {self.exploit}")
+        print(colored(f"Exploit successfully set to {self.exploit}", 'green'))
 
     def do_run(self, arg):
             if not self.target:
-            	print("Target not set. Use 'settarget <target>' to set the target IP or website.")
+            	print(colored("Target not set. Use 'settarget <target>' to set the target IP or website.", 'red'))
             	return
             if not self.exploit:
-            	print("Exploit not set. Use 'setexploit <exploit number>' to set the exploit.")
+            	print(colored("Exploit not set. Use 'setexploit <exploit number>' to set the exploit.", 'red'))
             	return
             os.system(f"python {self.exploit} {self.attacker_ip} &")
             os.system("nc -lvp 4444") 
         
     def do_settarget(self, arg):
         self.target = arg
-        print(f"Target set to {self.target}")
+        print(colored(f"Target successfully set to {self.target}", 'green'))
         
     def do_exit(self, arg):
         return True
