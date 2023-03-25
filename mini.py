@@ -2,34 +2,35 @@ import cmd
 import socket
 import os
 import pyfiglet
+from termcolor import colored
 
 banner = pyfiglet.figlet_format("MetasploitMini")
-print(banner)
+print(colored(banner, 'blue'))
 print("Made by: Tommaso Bona")
 print("Github: https://github.com/ParzivalHack")
 print("Tip: try running the 'help' command.")
 
 class MyCLI(cmd.Cmd):
-    prompt = "MetasploitMini~$ "
+    prompt = colored("MetasploitMini~$ ", 'red')
     
     def __init__(self):
         super().__init__()
         self.target = ""
       
     def  do_help(self, arg):
-    	print("Commands List:")
-    	print("- help, to show this help message")
-    	print("- settarget, to set a global target")
-    	print("- scan, to use the Port Scanner")
-    	print("- banner, to use the Banner Grabber")
-    	print("- setexploit, to set a global exploit")
-    	print("- setip, to set the attacker IP for the reverse shell")
-    	print("- run, to run an exploit")
-    	print("- exit, to exit MetasploitMini")
+    	print(colored("Commands List:", 'blue'))
+    	print(colored("- help, to show this help message", 'blue'))
+    	print(colored("- settarget, to set a global target", 'blue'))
+    	print(colored("- scan, to use the Port Scanner", 'blue'))
+    	print(colored("- banner, to use the Banner Grabber", 'blue'))
+    	print(colored("- setexploit, to set a global exploit", 'blue'))
+    	print(colored("- setip, to set the attacker IP for the reverse shell", 'blue'))
+    	print(colored("- run, to run an exploit", 'blue'))
+    	print(colored("- exit, to exit MetasploitMini", 'blue'))
     	
     def do_setip(self, arg):
         self.attacker_ip = arg
-        print(f"Attacker IP set to {self.attacker_ip}")	
+        print(colored(f"Attacker IP set to {self.attacker_ip}", 'blue'))	
     
     def do_scan(self, arg):
         if not self.target:
