@@ -19,11 +19,14 @@ class MyCLI(cmd.Cmd):
     def  do_help(self, arg):
     	print("Commands List:")
     	print("- help, to show this help message")
-    	print("- settarget, to set a global target")
-    	print("- scan, to use the Port Scanner")
-    	print("- banner, to use the Banner Grabber")
-    	print("- setexploit, to set a global exploit")
-    	print("- run, to run an exploit")
+        print("- settarget, to set a global target")
+        print("- scan, to use the Port Scanner")
+        print("- banner, to use the Banner Grabber")
+        print("- setexploit, to set a global exploit")
+        print("- setip, to set the attacker IP for the reverse shell")
+        print("- run, to run an exploit")
+        print("- showexploit, to show the current exploit set")
+        print("- showtarget, to show the current target set")
     	
     def do_scan(self, arg):
         if not self.target:
