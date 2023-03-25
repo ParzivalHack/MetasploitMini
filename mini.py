@@ -27,7 +27,10 @@ class MyCLI(cmd.Cmd):
         print("- run, to run an exploit")
         print("- showexploit, to show the current exploit set")
         print("- showtarget, to show the current target set")
-    	
+    def do_setip(self, arg):
+        self.attacker_ip = arg
+        print(f"Attacker IP set to {self.attacker_ip}")	
+    
     def do_scan(self, arg):
         if not self.target:
             print("Target not set. Use 'settarget <target>' to set the target IP or website.")
