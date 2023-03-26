@@ -16,6 +16,12 @@ print(colored("Tip: try running the 'help' command.", 'blue'))
 class MyCLI(cmd.Cmd):
     prompt = colored("MetasploitMini~$ ", 'red')
     
+    def do_myip(self, arg):
+        try:
+        res = requests.get('https://api.ipify.org')
+        print(colored(f"Your IP Address: {res.text}", 'blue'))
+    except:
+        print(colored("Error getting IP address", 'red'))
     def __init__(self):
         super().__init__()
         self.target = ""
