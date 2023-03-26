@@ -4,6 +4,19 @@ import os
 import pyfiglet
 from termcolor import colored
 
+
+print(colored(" .----------------. ", 'blue'))
+print(colored("| .--------------. |", 'blue'))
+print(colored("| | ____    ____ | |", 'blue'))
+print(colored("| ||_   \  /   _|| |", 'blue'))
+print(colored("| |  |   \/   |  | |", 'blue'))
+print(colored("| |  | |\  /| |  | |", 'blue'))
+print(colored("| | _| |_\/_| |_ | |", 'blue'))
+print(colored("| ||_____||_____|| |", 'blue'))
+print(colored("| |              | |", 'blue'))
+print(colored("| '--------------' |", 'blue'))
+print(colored(" '----------------' ", 'blue'))
+
 banner = pyfiglet.figlet_format("Metasploit")
 print(colored(banner, 'blue'))
 banner2 = pyfiglet.figlet_format("Mini")
