@@ -3,6 +3,7 @@ import socket
 import os
 import pyfiglet
 from termcolor import colored
+import requests
 
 banner = pyfiglet.figlet_format("Metasploit")
 banner_colored = colored(banner, 'blue')
@@ -18,10 +19,10 @@ class MyCLI(cmd.Cmd):
     
     def do_myip(self, arg):
         try:
-        res = requests.get('https://api.ipify.org')
-        print(colored(f"Your IP Address: {res.text}", 'blue'))
-    except:
-        print(colored("Error getting IP address", 'red'))
+        	res = requests.get('https://api.ipify.org')
+        	print(colored(f"Your IP Address: {res.text}", 'blue'))
+        except:
+        	print(colored("Error getting IP address", 'red'))
     def __init__(self):
         super().__init__()
         self.target = ""
@@ -33,12 +34,17 @@ class MyCLI(cmd.Cmd):
     	print(colored("- scan, to use the Port Scanner", 'blue'))
     	print(colored("- banner, to use the Banner Grabber", 'blue'))
     	print(colored("- setexploit, to set a global exploit", 'blue'))
+    	print(colored("- myip, to show your own IP address", 'blue'))
     	print(colored("- setip, to set the attacker IP for the reverse shell", 'blue'))
     	print(colored("- run, to run an exploit", 'blue'))
     	print(colored("- exit, to exit MetasploitMini", 'blue'))
     	
     def do_setip(self, arg):
         self.attacker_ip = arg
+        args = arg.split()
+        if len(args) < 1:
+            print(colored("Usage: setip <your ip>", 'yellow'))
+            return
         print(colored(f"Attacker IP successfully set to {self.attacker_ip}", 'green'))	
     
     def do_scan(self, arg):
@@ -48,7 +54,7 @@ class MyCLI(cmd.Cmd):
         
         args = arg.split()
         if len(args) < 1:
-            print(colored("Usage: scan <port range>", 'blue'))
+            print(colored("Usage: scan <port range>", 'yellow'))
             return
         start_port, end_port = args[0].split("-")
         start_port = int(start_port)
@@ -69,7 +75,7 @@ class MyCLI(cmd.Cmd):
         
         args = arg.split()
         if len(args) < 1:
-            print(colored("Usage: banner <port>", 'blue'))
+            print(colored("Usage: banner <port>", 'yellow'))
             return
         port = int(args[0])
         
@@ -84,8 +90,14 @@ class MyCLI(cmd.Cmd):
         exploits = ["exploit1.py", "exploit2.py", "exploit3.py", "exploit4.py", "exploit5.py"]
         args = arg.split()
         if len(args) < 1:
-            print(colored("Usage: setexploit <exploit number>", 'blue'))
-            return
+        	print(colored("Exploits list:", 'blue'))
+        	print(colored("1) Python Reverse Shell", 'blue'))
+        	print(colored("2) Not available yet", 'blue'))
+        	print(colored("3) Not available yet", 'blue'))
+        	print(colored("4) Not available yet", 'blue'))
+        	print(colored("5) Not available yet", 'blue'))
+        	print(colored("Usage: setexploit <exploit number>", 'yellow'))
+        	return
         exploit_num = int(args[0])
         if exploit_num < 1 or exploit_num > len(exploits):
             print(colored("Invalid exploit number", 'red'))
