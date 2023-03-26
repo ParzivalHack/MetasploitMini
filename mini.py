@@ -4,8 +4,10 @@ import os
 import pyfiglet
 from termcolor import colored
 
-banner = pyfiglet.figlet_format("MetasploitMini")
+banner = pyfiglet.figlet_format("Metasploit")
 print(colored(banner, 'blue'))
+banner2 = pyfiglet.figlet_format("Mini")
+print(colored(banner2, 'red'))
 print(colored("Made by: Tommaso Bona", 'blue'))
 print(colored("Github: https://github.com/ParzivalHack", 'blue'))
 print(colored("Tip: try running the 'help' command.", 'blue'))
