@@ -9,3 +9,7 @@ MetasploitMini includes a range of built-in modules for performing various tasks
 One of the key features of MetasploitMini is its modular architecture, which allows users to use built-in modules for performing specific tasks or targeting specific systems. This makes it an extremely flexible tool for penetration testing and vulnerability assessment, as users can tailor it to their specific needs and requirements.
 
 Overall, MetasploitMini is a powerful and versatile tool for testing the security of remote systems.
+# Usage
+```git clone https://github.com/ParzivalHack/MetasploitMini```
+```cd MetasploitMini```
+```python mini.py```
