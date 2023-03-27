@@ -18,26 +18,30 @@ class MyCLI(cmd.Cmd):
     prompt = colored("MetasploitMini~$ ", 'red')
     
     def do_myip(self, arg):
-        try:
-        	res = requests.get('https://api.ipify.org')
-        	print(colored(f"Your IP Address: {res.text}", 'blue'))
-        except:
-        	print(colored("Error getting IP address", 'red'))
-    def __init__(self):
-        super().__init__()
+         try:
+            res = requests.get('https://api.ipify.org')
+            print(colored(f"Your IP Address: {res.text}", 'blue'))
+         except:
+            answer = print(colored(input("Error getting IP address; wanna try with 'ifconfig' instead? (y/n)", 'red')))
+            if answer == "y":
+                os.system("ifconfig")
+            if answer == "n":
+                exit
+    def _init_(self):
+        super()._init_()
         self.target = ""
       
     def  do_help(self, arg):
-    	print(colored("Commands List:", 'blue'))
-    	print(colored("- help, to show this help message", 'blue'))
-    	print(colored("- settarget, to set a global target", 'blue'))
-    	print(colored("- scan, to use the Port Scanner", 'blue'))
-    	print(colored("- banner, to use the Banner Grabber", 'blue'))
-    	print(colored("- setexploit, to set a global exploit", 'blue'))
-    	print(colored("- myip, to show your own IP address", 'blue'))
-    	print(colored("- setip, to set the attacker IP for the reverse shell", 'blue'))
-    	print(colored("- run, to run an exploit", 'blue'))
-    	print(colored("- exit, to exit MetasploitMini", 'blue'))
+        print(colored("Commands List:", 'blue'))
+        print(colored("- help, to show this help message", 'blue'))
+        print(colored("- settarget, to set a global target", 'blue'))
+        print(colored("- scan, to use the Port Scanner", 'blue'))
+        print(colored("- banner, to use the Banner Grabber", 'blue'))
+        print(colored("- setexploit, to set a global exploit", 'blue'))
+        print(colored("- myip, to show your own IP address", 'blue'))
+        print(colored("- setip, to set the attacker IP for the reverse shell", 'blue'))
+        print(colored("- run, to run an exploit", 'blue'))
+        print(colored("- exit, to exit MetasploitMini", 'blue'))
     	
     def do_setip(self, arg):
         self.attacker_ip = arg
@@ -49,7 +53,7 @@ class MyCLI(cmd.Cmd):
     
     def do_scan(self, arg):
         if not self.target:
-            print(colored("Target not set. Use 'settarget <target>' to set the target IP or website.", 'red'))
+            print(colored("Target not set. Use 'settarget <target>' to set the target IP or website.", 'yellow'))
             return
         
         args = arg.split()
@@ -70,7 +74,7 @@ class MyCLI(cmd.Cmd):
             
     def do_banner(self, arg):
         if not self.target:
-            print(colored("Target not set. Use 'settarget <target>' to set the target IP or website.", 'red'))
+            print(colored("Target not set. Use 'settarget <target>' to set the target IP or website.", 'yellow'))
             return
         
         args = arg.split()
@@ -90,30 +94,37 @@ class MyCLI(cmd.Cmd):
         exploits = ["exploit1.py", "exploit2.py", "exploit3.py", "exploit4.py", "exploit5.py"]
         args = arg.split()
         if len(args) < 1:
-        	print(colored("Exploits list:", 'blue'))
-        	print(colored("1) Python Reverse Shell", 'blue'))
-        	print(colored("2) Not available yet", 'blue'))
-        	print(colored("3) Not available yet", 'blue'))
-        	print(colored("4) Not available yet", 'blue'))
-        	print(colored("5) Not available yet", 'blue'))
-        	print(colored("Usage: setexploit <exploit number>", 'yellow'))
-        	return
+            print(colored("Exploits list:", 'blue'))
+            print(colored("1) Python Reverse Shell", 'blue'))
+            print(colored("2) Not available yet", 'blue'))
+            print(colored("3) Not available yet", 'blue'))
+            print(colored("4) Not available yet", 'blue'))
+            print(colored("5) Not available yet", 'blue'))
+            print(colored("Usage: setexploit <exploit number>", 'yellow'))
+            return
         exploit_num = int(args[0])
         if exploit_num < 1 or exploit_num > len(exploits):
-            print(colored("Invalid exploit number", 'red'))
+            print(colored("Invalid exploit number", 'yellow'))
             return
         self.exploit = exploits[exploit_num-1]
         print(colored(f"Exploit successfully set to {self.exploit}", 'green'))
 
     def do_run(self, arg):
+        try:
             if not self.target:
-            	print(colored("Target not set. Use 'settarget <target>' to set the target IP or website.", 'red'))
-            	return
+                print(colored("Target not set. Use 'settarget <target>' to set the target IP or website.", 'yellow'))
+                return
             if not self.exploit:
-            	print(colored("Exploit not set. Use 'setexploit <exploit number>' to set the exploit.", 'red'))
-            	return
-            os.system(f"python {self.exploit} {self.attacker_ip} &")
-            os.system("nc -lvp 4444 -s {self.attacker_ip}") 
+                print(colored("Exploit not set. Use 'setexploit <exploit number>' to set the exploit.", 'yellow'))
+                return
+            if not self.attacker_ip:
+                print(colored("Attacker IP not set. Use 'setip <your ip>' to set attacker IP.", 'yellow'))
+                return
+        except AttributeError:
+            print(colored("Attacker IP not set. Use 'setip <your ip>' to set attacker IP.", 'yellow'))
+            return
+        os.system(f"python {self.exploit} {self.attacker_ip} &")
+        os.system("nc -lvp 4444 -s {self.attacker_ip}") 
         
     def do_settarget(self, arg):
         self.target = arg
