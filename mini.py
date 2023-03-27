@@ -28,8 +28,10 @@ class MyCLI(cmd.Cmd):
             if answer == "n":
                 exit
     def _init_(self):
-        super()._init_()
+        super().__init__()
         self.target = ""
+        self.exploit = ""
+        self.attacker_ip = ""
       
     def  do_help(self, arg):
         print(colored("Commands List:", 'blue'))
