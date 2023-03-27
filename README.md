@@ -10,6 +10,8 @@ One of the key features of MetasploitMini is its modular architecture, which all
 
 Overall, MetasploitMini is a powerful and versatile tool for testing the security of remote systems.
 # Install
+```apt update && apt upgrade```
+
 ```pip install requests```
 
 ```pip install pyfiglet```
