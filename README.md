@@ -17,9 +17,9 @@ Overall, MetasploitMini is a powerful and versatile tool for testing the securit
 ```pip install pyfiglet```
 
 ```pip install termcolor```
-# Usage
-```git clone https://github.com/ParzivalHack/MetasploitMini```
 
+```git clone https://github.com/ParzivalHack/MetasploitMini```
+# Usage
 ```cd MetasploitMini```
 
 ```python mini.py```
