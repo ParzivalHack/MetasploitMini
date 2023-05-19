@@ -27,7 +27,7 @@ class MyCLI(cmd.Cmd):
                 os.system("ifconfig")
             if answer == "n":
                 exit
-    def _init_(self):
+    def __init__(self):
         super().__init__()
         self.target = ""
         self.exploit = ""
